@@ -21,6 +21,7 @@
 		<maven.version>3.8.6</maven.version>
 		<jdk.version>21</jdk.version>
 		<java.release>21</java.release>
+		<spring-boot.version>3.3.2</spring-boot.version>
 
 		<skip.unit.tests>false</skip.unit.tests>
 
@@ -113,6 +114,16 @@
 			<groupId>org.wiremock</groupId>
 			<artifactId>wiremock-standalone</artifactId>
 			<version>3.9.1</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>io.rest-assured</groupId>
+			<artifactId>spring-web-test-client</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>io.projectreactor</groupId>
+			<artifactId>reactor-test</artifactId>
 			<scope>test</scope>
 		</dependency>
 

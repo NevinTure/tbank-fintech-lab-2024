@@ -24,7 +24,7 @@ jobs:
           cache: maven
 
       - name: maven build
-        run: mvn -pl translator -am package
+        run: mvn package
 
       - id: jacoco
         uses: madrapps/jacoco-report@v1.6.1
@@ -49,7 +49,7 @@ jobs:
           distribution: 'temurin'
           cache: maven
 
-      - run: mvn -pl translator -am checkstyle:check
+      - run: mvn checkstyle:check
 
   integration-test:
     name: integration tests
@@ -63,4 +63,4 @@ jobs:
           distribution: 'temurin'
           cache: maven
 
-      - run: mvn -pl translator -am verify -Dskip.unit.tests=true
+      - run: mvn verify -Dskip.unit.tests=true
