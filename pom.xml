@@ -21,6 +21,7 @@
 		<maven.version>3.8.6</maven.version>
 		<jdk.version>21</jdk.version>
 		<java.release>21</java.release>
+		<spring-boot.version>3.3.2</spring-boot.version>
 
 		<skip.unit.tests>false</skip.unit.tests>
 
