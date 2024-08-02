@@ -42,8 +42,7 @@ public class YandexTranslationHandler implements TranslationHandler {
             translatedWords.add(future.get().getTranslations().getFirst().getText());
         }
         return new TranslationResponse(
-                joinWords(translatedWords),
-                request.getTargetLang()
+                joinWords(translatedWords)
         );
     }
 
@@ -54,7 +53,7 @@ public class YandexTranslationHandler implements TranslationHandler {
         return response
                 .getLanguages()
                 .stream()
-                .map(v -> new Language(String.format("%s - %s", v.getName(), v.getCode())))
+                .map(v -> new Language(v.getCode()))
                 .toList();
     }
 

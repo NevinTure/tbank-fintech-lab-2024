@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class TranslationRequest {
 
+    private String userAddr;
     private String text;
     private String sourceLang;
     private String targetLang;

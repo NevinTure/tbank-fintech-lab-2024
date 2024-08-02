@@ -4,6 +4,8 @@ import edu.java.translator.model.Translation;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 public class JdbcTranslationRepository implements TranslationRepository {
 
