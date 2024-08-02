@@ -1,6 +1,7 @@
 package edu.java.translator;
 
 import edu.java.translator.dtos.TranslationRequest;
+import edu.java.translator.dtos.TranslationResponse;
 import edu.java.translator.services.TranslationHandler;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,7 +29,7 @@ public class IntegrationTest {
                 "en",
                 "ru"
         );
-        String translate = translationHandler.translate(request);
-        System.out.println(translate);
+        TranslationResponse response = translationHandler.translate(request);
+        System.out.println(response.getTranslatedText());
     }
 }
