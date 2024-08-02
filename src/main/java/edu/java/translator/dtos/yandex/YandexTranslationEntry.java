@@ -1,4 +1,4 @@
-package edu.java.translator.dtos;
+package edu.java.translator.dtos.yandex;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -7,9 +7,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class TranslationRequest {
+public class YandexTranslationEntry {
 
     private String text;
-    private String sourceLang;
-    private String targetLang;
 }

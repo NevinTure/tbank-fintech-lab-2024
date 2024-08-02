@@ -1,3 +1,9 @@
+app:
+  provider:
+    name: yandex
+    token: ${API_TOKEN}
+    url: ${API_URL}
+
 spring:
   application:
     name: translator
@@ -7,7 +13,6 @@ spring:
 
 server:
   port: 8080
-
 logging:
   config: classpath:log4j2-plain.xml
 #  level:

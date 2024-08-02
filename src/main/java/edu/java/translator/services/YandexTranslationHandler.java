@@ -1,11 +1,14 @@
 package edu.java.translator.services;
 
 import edu.java.translator.clients.YandexClient;
+import edu.java.translator.dtos.Language;
 import edu.java.translator.dtos.TranslationRequest;
+import edu.java.translator.dtos.TranslationResponse;
+import edu.java.translator.dtos.yandex.YandexLanguagesRequest;
+import edu.java.translator.dtos.yandex.YandexLanguagesResponse;
 import edu.java.translator.dtos.yandex.YandexTranslationRequest;
 import edu.java.translator.dtos.yandex.YandexTranslationResponse;
 import lombok.SneakyThrows;
-import org.springframework.boot.web.client.RestTemplateBuilder;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -26,23 +29,38 @@ public class YandexTranslationHandler implements TranslationHandler {
 
     @SneakyThrows
     @Override
-    public String translate(TranslationRequest request) {
+    public TranslationResponse translate(TranslationRequest request) {
         List<YandexTranslationRequest> requests = convertToRequests(request);
         List<Future<YandexTranslationResponse>> futures = threadPool
                 .invokeAll(
                         requests
                                 .stream()
-                                .<Callable<YandexTranslationResponse>>map(v -> () -> client.translate(v)).toList());
-        List<YandexTranslationResponse> responses = new ArrayList<>();
+                                .<Callable<YandexTranslationResponse>>map(v -> () -> client.translate(v))
+                                .toList());
+        List<String> translatedWords = new ArrayList<>();
         for (Future<YandexTranslationResponse> future : futures) {
-            responses.add(future.get());
+            translatedWords.add(future.get().getTranslations().getFirst().getText());
         }
-        return null;
+        return new TranslationResponse(
+                joinWords(translatedWords),
+                request.getTargetLang()
+        );
+    }
+
+    @Override
+    public List<Language> getSupportedLanguages() {
+        YandexLanguagesRequest request = new YandexLanguagesRequest();
+        YandexLanguagesResponse response = client.getLanguages(request);
+        return response
+                .getLanguages()
+                .stream()
+                .map(v -> new Language(String.format("%s - %s", v.getName(), v.getCode())))
+                .toList();
     }
 
     private List<YandexTranslationRequest> convertToRequests(TranslationRequest request) {
         String text = request.getText().strip();
-        return Arrays.stream(getWords(text)).map(v -> {
+        return getWords(text).stream().map(v -> {
             YandexTranslationRequest yaReq = new YandexTranslationRequest();
             yaReq.setTexts(List.of(v));
             yaReq.setSourceLang(request.getSourceLang());
@@ -51,11 +69,11 @@ public class YandexTranslationHandler implements TranslationHandler {
         }).toList();
     }
 
-    private String[] getWords(String text) {
-        return text.split("\\s+");
+    private String joinWords(List<String> translated) {
+        return String.join(" ", translated);
     }
 
-    private String[] getSpaces(String text) {
-        return text.split("\\S+");
+    private List<String> getWords(String text) {
+        return Arrays.stream(text.split("\\s+")).toList();
     }
 }
