@@ -4,6 +4,5 @@ create table translation(
     source_lang varchar(50) not null,
     target_lang varchar(50) not null,
     origin_text text,
-    translated_text text,
-    created_at timestamp with time zone not null
+    translated_text text
 )

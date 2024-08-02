@@ -2,11 +2,11 @@ package edu.java.translator.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
-
-import java.time.OffsetDateTime;
+import lombok.NoArgsConstructor;
 
 @Data
 @AllArgsConstructor
+@NoArgsConstructor
 public class Translation {
 
     private Long id;
@@ -15,9 +15,4 @@ public class Translation {
     private String targetLang;
     private String originText;
     private String translatedText;
-    private OffsetDateTime createdAt;
-
-    public Translation() {
-        this.createdAt = OffsetDateTime.now().withNano(0);
-    }
 }

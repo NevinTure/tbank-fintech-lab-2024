@@ -18,15 +18,14 @@ public class JdbcTranslationRepository implements TranslationRepository {
         Long id = jdbcTemplate
                 .queryForObject(
                         "insert into translation (user_addr, source_lang, target_lang," +
-                                " origin_text, translated_text, created_at) " +
-                                "values (?, ?, ?, ?, ?, ?)",
+                                " origin_text, translated_text) " +
+                                "values (?, ?, ?, ?, ?)",
                         Long.class,
                         translation.getUserAddr(),
                         translation.getSourceLang(),
                         translation.getTargetLang(),
                         translation.getOriginText(),
-                        translation.getTranslatedText(),
-                        translation.getCreatedAt());
+                        translation.getTranslatedText());
         translation.setId(id);
         return translation;
     }
