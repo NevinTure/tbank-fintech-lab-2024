@@ -4,8 +4,6 @@ import edu.java.translator.model.Translation;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
-import java.util.List;
-
 @Repository
 public class JdbcTranslationRepository implements TranslationRepository {
 
@@ -21,7 +19,7 @@ public class JdbcTranslationRepository implements TranslationRepository {
                 .queryForObject(
                         "insert into translation (user_addr, source_lang, target_lang," +
                                 " origin_text, translated_text) " +
-                                "values (?, ?, ?, ?, ?)",
+                                "values (?, ?, ?, ?, ?) returning id",
                         Long.class,
                         translation.getUserAddr(),
                         translation.getSourceLang(),

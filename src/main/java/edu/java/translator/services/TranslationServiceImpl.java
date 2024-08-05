@@ -7,6 +7,7 @@ import edu.java.translator.model.Translation;
 import edu.java.translator.repositories.TranslationRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import java.util.List;
 
@@ -28,6 +29,7 @@ public class TranslationServiceImpl implements TranslationService {
 
     @Override
     public TranslationResponse translate(TranslationRequest request) {
+        formatRequestLanguages(request);
         Translation translation = mapper.map(request, Translation.class);
         TranslationResponse response = handler.translate(request);
         translation.setTranslatedText(response.getTranslatedText());
@@ -37,11 +39,20 @@ public class TranslationServiceImpl implements TranslationService {
 
     @Override
     public List<Language> getSupportedLanguages() {
-        return handler.getSupportedLanguages();
+        return handler
+                .getSupportedLanguages()
+                .stream()
+                .peek(v -> v.setCode(StringUtils.capitalize(v.getCode())))
+                .toList();
     }
 
     @Override
     public void save(Translation translation) {
         repository.save(translation);
+    }
+
+    private void formatRequestLanguages(TranslationRequest request) {
+        request.setSourceLang(request.getSourceLang().toLowerCase());
+        request.setTargetLang(request.getTargetLang().toLowerCase());
     }
 }

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Translator</title>
+    <link rel="stylesheet" th:href="@{/css/translator.css}"/>
+</head>
+<body>
+
+<div class="translator-container">
+    <form action="#" th:action="@{/translator}" th:object="${request}" method="post">
+        <div class="form-group">
+            <label for="source-lang">From:</label>
+            <select id="source-lang" th:field="*{sourceLang}">
+                <option
+                        th:each="language : ${languages}"
+                        th:text="${language.getCode()}"
+                        th:value="${language.getCode()}">
+                </option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="target-lang">To:</label>
+            <select id="target-lang" th:field="*{targetLang}">
+                <option
+                        th:each="language : ${languages}"
+                        th:text="${language.getCode()}"
+                        th:value="${language.getCode()}">
+                </option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="source-text">Source Text:</label>
+            <textarea id="source-text" th:field="*{text}" rows="5"></textarea>
+        </div>
+        <button class="form-group" type="submit">Translate</button>
+    </form>
+    <div>
+        <label for="translated-text">Translated Text:</label>
+        <textarea id="translated-text"
+                  th:text="${response != null ? response.getTranslatedText() : ''}"
+                  rows="5"
+                  readonly></textarea>
+    </div>
+</div>
+</body>
+</html>
