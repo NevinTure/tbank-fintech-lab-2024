@@ -31,18 +31,9 @@ public class YandexTranslationHandler implements TranslationHandler {
     @Override
     public TranslationResponse translate(TranslationRequest request) {
         List<YandexTranslationRequest> requests = convertToRequests(request);
-        List<Future<YandexTranslationResponse>> futures = threadPool
-                .invokeAll(
-                        requests
-                                .stream()
-                                .<Callable<YandexTranslationResponse>>map(v -> () -> client.translate(v))
-                                .toList());
-        List<String> translatedWords = new ArrayList<>();
-        for (Future<YandexTranslationResponse> future : futures) {
-            translatedWords.add(future.get().getTranslations().getFirst().getText());
-        }
+        List<YandexTranslationResponse> responses = sendRequests(requests);
         return new TranslationResponse(
-                joinWords(translatedWords)
+                extractTextFromResponses(responses)
         );
     }
 
@@ -68,11 +59,37 @@ public class YandexTranslationHandler implements TranslationHandler {
         }).toList();
     }
 
-    private String joinWords(List<String> translated) {
-        return String.join(" ", translated);
-    }
-
     private List<String> getWords(String text) {
         return Arrays.stream(text.split("\\s+")).toList();
+    }
+
+    @SneakyThrows
+    private List<YandexTranslationResponse> sendRequests(List<YandexTranslationRequest> requests) {
+        List<Future<YandexTranslationResponse>> futures = threadPool
+                .invokeAll(
+                        requests
+                                .stream()
+                                .<Callable<YandexTranslationResponse>>map(v -> () -> client.translate(v))
+                                .toList());
+        List<YandexTranslationResponse> responses = new ArrayList<>(futures.size());
+        for (Future<YandexTranslationResponse> future : futures) {
+            responses.add(future.get());
+        }
+        return responses;
+    }
+
+    private String extractTextFromResponses(List<YandexTranslationResponse> responses) {
+        return joinWords(
+                responses
+                        .stream()
+                        .map(v -> v.getTranslations()
+                                .getFirst()
+                                .getText())
+                        .toList()
+        );
+    }
+
+    private String joinWords(List<String> translated) {
+        return String.join(" ", translated);
     }
 }
