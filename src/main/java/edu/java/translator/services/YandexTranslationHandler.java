@@ -27,7 +27,6 @@ public class YandexTranslationHandler implements TranslationHandler {
         this.threadPool = threadPool;
     }
 
-    @SneakyThrows
     @Override
     public TranslationResponse translate(TranslationRequest request) {
         List<YandexTranslationRequest> requests = convertToRequests(request);

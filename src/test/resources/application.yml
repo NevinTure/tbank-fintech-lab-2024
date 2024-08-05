@@ -1,18 +1,21 @@
 app:
   provider:
-    name: yandex
-    token: ${API_TOKEN}
-    url: ${API_URL}
+    name: ${PROVIDER_NAME}
+    token: ${PROVIDER_API_TOKEN}
+    url: ${PROVIDER_API_URL}
 
 spring:
   application:
     name: translator
-  autoconfigure:
-    exclude:
-      - org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: ${DB_URL}
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
 
 server:
-  port: 8080
+  port: ${SERVER_PORT}
+
 logging:
   config: classpath:log4j2-plain.xml
 #  level:

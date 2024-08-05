@@ -10,6 +10,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.client.ResponseErrorHandler;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.util.DefaultUriBuilderFactory;
 
 import java.net.URI;
 
@@ -37,6 +38,7 @@ public class YandexClientConfig {
         return builder
                 .defaultHeader("Content-Type", "application/json")
                 .defaultHeader("Authorization", "Api-Key ".concat(token.apiKey()))
+                .uriTemplateHandler(new DefaultUriBuilderFactory(baseUrlStr))
                 .errorHandler(errorHandler)
                 .build();
     }
@@ -45,8 +47,7 @@ public class YandexClientConfig {
     public YandexClient yandexClient() {
         return new YandexClientImpl(
                 token,
-                restTemplate(),
-                URI.create(baseUrlStr)
+                restTemplate()
         );
     }
 }
