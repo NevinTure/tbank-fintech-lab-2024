@@ -4,16 +4,20 @@ import edu.java.translator.dtos.Language;
 import edu.java.translator.dtos.TranslationRequest;
 import edu.java.translator.services.TranslationService;
 import jakarta.servlet.http.HttpServletRequest;
-import lombok.extern.slf4j.Slf4j;
+import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 
 @RequestMapping("/translator")
 @Controller
-@Slf4j
+@Validated
 public class TranslationController {
 
     private final TranslationService service;
@@ -24,20 +28,24 @@ public class TranslationController {
 
     @GetMapping
     public ModelAndView show() {
-        ModelAndView mav = new ModelAndView("translator");
-        List<Language> languages = service.getSupportedLanguages();
-        mav.addObject("languages", languages);
-        mav.addObject("request", new TranslationRequest());
-        return mav;
+        return createModelAndView(Map.of());
     }
 
     @PostMapping
     public ModelAndView translate(
-            @ModelAttribute("request") TranslationRequest request,
+            @ModelAttribute("request") @Valid TranslationRequest request,
             HttpServletRequest httpRequest) {
+        request.setUserAddr(Optional
+                .ofNullable(httpRequest.getHeader("X-Forwarded-For"))
+                .orElseGet(httpRequest::getRemoteAddr));
+        return createModelAndView(Map.of("response", service.translate(request)));
+    }
+
+    private ModelAndView createModelAndView(Map<String, ?> map) {
         ModelAndView mav = new ModelAndView("translator");
-        request.setUserAddr(httpRequest.getRemoteAddr());
-        mav.addObject("response", service.translate(request));
+        mav.addAllObjects(map);
+        mav.addObject("request", new TranslationRequest());
+        mav.addObject("languages", service.getSupportedLanguages());
         return mav;
     }
 }

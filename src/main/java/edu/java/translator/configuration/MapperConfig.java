@@ -15,7 +15,7 @@ public class MapperConfig {
         ModelMapper mapper = new ModelMapper();
         TypeMap<TranslationRequest, Translation> fromDto =
                 mapper.createTypeMap(TranslationRequest.class, Translation.class);
-        fromDto.addMapping(TranslationRequest::getText, Translation::setOriginText);
+        fromDto.addMapping(TranslationRequest::getSourceText, Translation::setOriginText);
         return mapper;
     }
 

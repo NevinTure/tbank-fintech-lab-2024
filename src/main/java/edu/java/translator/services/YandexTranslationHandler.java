@@ -48,7 +48,7 @@ public class YandexTranslationHandler implements TranslationHandler {
     }
 
     private List<YandexTranslationRequest> convertToRequests(TranslationRequest request) {
-        String text = request.getText().strip();
+        String text = request.getSourceText().strip();
         return getWords(text).stream().map(v -> {
             YandexTranslationRequest yaReq = new YandexTranslationRequest();
             yaReq.setTexts(List.of(v));
