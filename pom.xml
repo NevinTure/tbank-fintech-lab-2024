@@ -189,6 +189,8 @@
 								<artifactId>lombok</artifactId>
 							</exclude>
 						</excludes>
+                        <mainClass>edu.java.translator.TranslatorApplication</mainClass>
+                        <layout>JAR</layout>
 					</configuration>
 					<executions>
 						<execution>

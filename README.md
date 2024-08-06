@@ -64,7 +64,7 @@ git clone https://github.com/NevinTure/tbank-fintech-lab-2024.git
 ```
 Из корневой директории проекта выполнить команду:
 ```
-./mvnw clean package -DskipTests
+./mvnw clean package spring-boot:repackage -dSkipTests
 ```
 В директории `target` появится исполняемый файл `translator-0.1.jar`.
 
