@@ -41,9 +41,9 @@ public class TranslationController {
         return createModelAndView(Map.of("response", service.translate(request)));
     }
 
-    private ModelAndView createModelAndView(Map<String, ?> map) {
+    private ModelAndView createModelAndView(Map<String, ?> attributes) {
         ModelAndView mav = new ModelAndView("translator");
-        mav.addAllObjects(map);
+        mav.addAllObjects(attributes);
         mav.addObject("request", new TranslationRequest());
         mav.addObject("languages", service.getSupportedLanguages());
         return mav;
