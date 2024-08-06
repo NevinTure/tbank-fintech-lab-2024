@@ -45,8 +45,8 @@ DB_PASSWORD # Пароль пользователя БД
 
 ### Яндекс
 
-Необходимо настроить доступ к API с помощью API-ключа:
-https://yandex.cloud/ru/docs/translate/operations/sa-api-key.
+Необходимо настроить [доступ к API с помощью API-ключа](https://yandex.cloud/ru/docs/translate/operations/sa-api-key)
+и узнать свой [folderId](https://yandex.cloud/ru/docs/resource-manager/operations/folder/get-id#console_1).
 
 В качестве переменных окружения указывать следующие значения:
 
@@ -64,7 +64,7 @@ git clone https://github.com/NevinTure/tbank-fintech-lab-2024.git
 ```
 Из корневой директории проекта выполнить команду:
 ```
-./mvnw clean package spring-boot:repackage -dSkipTests
+./mvnw clean package spring-boot:repackage -dskipTests
 ```
 В директории `target` появится исполняемый файл `translator-0.1.jar`.
 
