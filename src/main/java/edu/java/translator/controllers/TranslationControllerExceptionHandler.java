@@ -4,9 +4,10 @@ import edu.java.translator.dtos.ApiErrorResponse;
 import edu.java.translator.dtos.TranslationRequest;
 import edu.java.translator.exceptions.ClientBadRequestException;
 import edu.java.translator.exceptions.ProviderInternalServerErrorException;
-import edu.java.translator.exceptions.ProviderException;
 import edu.java.translator.services.TranslationService;
 import jakarta.servlet.http.HttpServletRequest;
+import java.util.List;
+import java.util.Map;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -15,10 +16,8 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.servlet.ModelAndView;
 
-import java.util.List;
-import java.util.Map;
-
 @ControllerAdvice
+@SuppressWarnings("MultipleStringLiterals")
 public class TranslationControllerExceptionHandler {
 
     private final TranslationService service;

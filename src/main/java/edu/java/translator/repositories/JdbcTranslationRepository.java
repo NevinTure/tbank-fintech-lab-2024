@@ -17,9 +17,9 @@ public class JdbcTranslationRepository implements TranslationRepository {
     public Translation save(Translation translation) {
         Long id = jdbcTemplate
                 .queryForObject(
-                        "insert into translation (user_addr, source_lang, target_lang," +
-                                " origin_text, translated_text) " +
-                                "values (?, ?, ?, ?, ?) returning id",
+                        "insert into translation (user_addr, source_lang, target_lang,"
+                                + " origin_text, translated_text) "
+                                + "values (?, ?, ?, ?, ?) returning id",
                         Long.class,
                         translation.getUserAddr(),
                         translation.getSourceLang(),

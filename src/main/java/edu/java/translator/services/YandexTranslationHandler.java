@@ -8,14 +8,13 @@ import edu.java.translator.dtos.yandex.YandexLanguagesRequest;
 import edu.java.translator.dtos.yandex.YandexLanguagesResponse;
 import edu.java.translator.dtos.yandex.YandexTranslationRequest;
 import edu.java.translator.dtos.yandex.YandexTranslationResponse;
-import lombok.SneakyThrows;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.Callable;
 import java.util.concurrent.Future;
 import java.util.concurrent.ThreadPoolExecutor;
+import lombok.SneakyThrows;
 
 public class YandexTranslationHandler implements TranslationHandler {
 

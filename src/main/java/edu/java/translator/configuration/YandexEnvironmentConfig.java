@@ -3,11 +3,10 @@ package edu.java.translator.configuration;
 import edu.java.translator.clients.YandexClient;
 import edu.java.translator.services.TranslationHandler;
 import edu.java.translator.services.YandexTranslationHandler;
+import java.util.concurrent.ThreadPoolExecutor;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-
-import java.util.concurrent.ThreadPoolExecutor;
 
 @ConditionalOnProperty(prefix = "app", name = "provider.name", havingValue = "yandex")
 @Configuration

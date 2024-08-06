@@ -3,7 +3,7 @@ package edu.java.translator.exceptions;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
-@EqualsAndHashCode(callSuper=true)
+@EqualsAndHashCode(callSuper = true)
 @Data
 public class ClientException extends RuntimeException {
 

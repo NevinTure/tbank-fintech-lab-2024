@@ -6,17 +6,17 @@ import edu.java.translator.dtos.yandex.*;
 import edu.java.translator.exceptions.ClientBadRequestException;
 import edu.java.translator.exceptions.ProviderException;
 import edu.java.translator.exceptions.ProviderInternalServerErrorException;
+import java.util.List;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-
-import java.util.List;
-
+import org.springframework.test.context.ActiveProfiles;
 import static com.github.tomakehurst.wiremock.client.WireMock.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 
 @SpringBootTest("app.provider.url=http://localhost:8080")
+@ActiveProfiles("yandex")
 @WireMockTest(httpPort = 8080)
 public class YandexClientTest extends IntegrationEnvironment {
 

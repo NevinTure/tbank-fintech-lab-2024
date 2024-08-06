@@ -12,8 +12,6 @@ import org.springframework.web.client.ResponseErrorHandler;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.DefaultUriBuilderFactory;
 
-import java.net.URI;
-
 @ConditionalOnProperty(prefix = "app", name = "provider.name", havingValue = "yandex")
 @Configuration
 public class YandexClientConfig {

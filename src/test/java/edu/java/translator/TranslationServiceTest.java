@@ -7,18 +7,16 @@ import edu.java.translator.model.Translation;
 import edu.java.translator.repositories.TranslationRepository;
 import edu.java.translator.services.TranslationHandler;
 import edu.java.translator.services.TranslationService;
+import java.util.List;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-
-import java.util.List;
-
 import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest
-public class JdbcTranslationServiceTest extends IntegrationEnvironment {
+public class TranslationServiceTest extends IntegrationEnvironment {
 
     @MockBean
     private TranslationRepository repo;

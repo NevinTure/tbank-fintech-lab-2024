@@ -5,11 +5,10 @@ import edu.java.translator.dtos.TranslationRequest;
 import edu.java.translator.dtos.TranslationResponse;
 import edu.java.translator.model.Translation;
 import edu.java.translator.repositories.TranslationRepository;
+import java.util.List;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
-
-import java.util.List;
 
 @Service
 public class TranslationServiceImpl implements TranslationService {

@@ -8,5 +8,6 @@ import edu.java.translator.dtos.yandex.YandexTranslationResponse;
 public interface YandexClient {
 
     YandexTranslationResponse translate(YandexTranslationRequest request);
+
     YandexLanguagesResponse getLanguages(YandexLanguagesRequest request);
 }

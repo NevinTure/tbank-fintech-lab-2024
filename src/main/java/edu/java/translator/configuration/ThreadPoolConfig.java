@@ -1,10 +1,9 @@
 package edu.java.translator.configuration;
 
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-
 import java.util.concurrent.Executors;
 import java.util.concurrent.ThreadPoolExecutor;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class ThreadPoolConfig {

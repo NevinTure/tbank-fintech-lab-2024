@@ -23,8 +23,8 @@ public class YandexClientImpl implements YandexClient {
     @Override
     public YandexTranslationResponse translate(YandexTranslationRequest request) {
         request.setFolderId(token.folderId());
-        return restTemplate.
-                postForObject(TRANSLATION_URN, request, YandexTranslationResponse.class);
+        return restTemplate
+                .postForObject(TRANSLATION_URN, request, YandexTranslationResponse.class);
     }
 
     @Override
