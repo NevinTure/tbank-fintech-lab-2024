@@ -2,8 +2,9 @@ package edu.java.translator.controllers;
 
 import edu.java.translator.dtos.ApiErrorResponse;
 import edu.java.translator.dtos.TranslationRequest;
-import edu.java.translator.exceptions.ApiClientErrorException;
-import edu.java.translator.exceptions.ApiServerErrorException;
+import edu.java.translator.exceptions.ClientBadRequestException;
+import edu.java.translator.exceptions.ProviderInternalServerErrorException;
+import edu.java.translator.exceptions.ProviderException;
 import edu.java.translator.services.TranslationService;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpStatus;
@@ -27,12 +28,12 @@ public class TranslationControllerExceptionHandler {
     }
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    @ExceptionHandler(ApiClientErrorException.class)
-    public ModelAndView handleApiClientError(
+    @ExceptionHandler(ClientBadRequestException.class)
+    public ModelAndView handleBadRequest(
             HttpServletRequest req,
-            ApiClientErrorException ex) {
+            ClientBadRequestException ex) {
         ApiErrorResponse response = new ApiErrorResponse(
-                ex.getDescription(),
+                ex.getMessage(),
                 ex.getName(),
                 ex.getCode()
         );
@@ -40,12 +41,12 @@ public class TranslationControllerExceptionHandler {
     }
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    @ExceptionHandler(ApiServerErrorException.class)
-    public ModelAndView handleApiServerError(
+    @ExceptionHandler(ProviderInternalServerErrorException.class)
+    public ModelAndView handleInternalServerError(
             HttpServletRequest req,
-            ApiServerErrorException ex) {
+            ProviderInternalServerErrorException ex) {
         ApiErrorResponse response = new ApiErrorResponse(
-                ex.getDescription(),
+                ex.getMessage(),
                 ex.getName(),
                 ex.getCode()
         );

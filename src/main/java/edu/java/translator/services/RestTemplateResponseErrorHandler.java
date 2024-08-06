@@ -1,8 +1,9 @@
 package edu.java.translator.services;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import edu.java.translator.exceptions.ApiClientErrorException;
-import edu.java.translator.exceptions.ApiServerErrorException;
+import edu.java.translator.exceptions.ClientBadRequestException;
+import edu.java.translator.exceptions.ProviderInternalServerErrorException;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.client.ClientHttpResponse;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.ResponseErrorHandler;
@@ -29,18 +30,24 @@ public class RestTemplateResponseErrorHandler implements ResponseErrorHandler {
     public void handleError(ClientHttpResponse response) throws IOException {
         Map<String, Object> map = objMapper.readValue(response.getBody(), Map.class);
         if (response.getStatusCode().is5xxServerError()) {
-            throw new ApiServerErrorException(
-                    "Internal Server Error",
-                    "ApiServerErrorException",
-                    response.getStatusCode().value()
-            );
+            switch (response.getStatusCode()) {
+                case HttpStatus.INTERNAL_SERVER_ERROR -> throw new ProviderInternalServerErrorException(
+                        "Internal Server Error",
+                        "ProviderInternalServerErrorException",
+                        response.getStatusCode().value()
+                );
+                default -> throw new IllegalStateException();
+            }
         } else if (response.getStatusCode().is4xxClientError()) {
             String desc = (String) map.get("message");
-            throw new ApiClientErrorException(
-                    desc,
-                    "ApiClientErrorException",
-                    response.getStatusCode().value()
-            );
+            switch (response.getStatusCode()) {
+                case HttpStatus.BAD_REQUEST -> throw new ClientBadRequestException(
+                        desc,
+                        "ClientBadRequestException",
+                        response.getStatusCode().value()
+                );
+                default -> throw new IllegalStateException();
+            }
         }
     }
 }

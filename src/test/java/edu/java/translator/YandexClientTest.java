@@ -3,8 +3,9 @@ package edu.java.translator;
 import com.github.tomakehurst.wiremock.junit5.WireMockTest;
 import edu.java.translator.clients.YandexClient;
 import edu.java.translator.dtos.yandex.*;
-import edu.java.translator.exceptions.ApiClientErrorException;
-import edu.java.translator.exceptions.ApiServerErrorException;
+import edu.java.translator.exceptions.ClientBadRequestException;
+import edu.java.translator.exceptions.ProviderException;
+import edu.java.translator.exceptions.ProviderInternalServerErrorException;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -74,7 +75,7 @@ public class YandexClientTest extends IntegrationEnvironment {
                 """, 400)));
 
         //then
-        assertThatExceptionOfType(ApiClientErrorException.class)
+        assertThatExceptionOfType(ClientBadRequestException.class)
                 .isThrownBy(() -> client.translate(request));
     }
 
@@ -96,7 +97,7 @@ public class YandexClientTest extends IntegrationEnvironment {
                 """, 500)));
 
         //then
-        assertThatExceptionOfType(ApiServerErrorException.class)
+        assertThatExceptionOfType(ProviderException.class)
                 .isThrownBy(() -> client.translate(request));
     }
 
@@ -149,7 +150,7 @@ public class YandexClientTest extends IntegrationEnvironment {
                 """, 400)));
 
         //then
-        assertThatExceptionOfType(ApiClientErrorException.class)
+        assertThatExceptionOfType(ClientBadRequestException.class)
                 .isThrownBy(() -> client.getLanguages(request));
     }
 
@@ -161,14 +162,14 @@ public class YandexClientTest extends IntegrationEnvironment {
         );
 
         //when
-        stubFor(post("/translate").willReturn(jsonResponse("""
+        stubFor(post("/languages").willReturn(jsonResponse("""
                 {
                     "message": "Internal server error"
                 }
                 """, 500)));
 
         //then
-        assertThatExceptionOfType(ApiServerErrorException.class)
+        assertThatExceptionOfType(ProviderInternalServerErrorException.class)
                 .isThrownBy(() -> client.getLanguages(request));
     }
 }
