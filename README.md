@@ -45,8 +45,8 @@ DB_PASSWORD # Пароль пользователя БД
 
 ### Яндекс
 
-Необходимо настроить доступ к API с помощью API-ключа:
-https://yandex.cloud/ru/docs/translate/operations/sa-api-key.
+Необходимо настроить [доступ к API с помощью API-ключа](https://yandex.cloud/ru/docs/translate/operations/sa-api-key)
+и узнать свой [folderId](https://yandex.cloud/ru/docs/resource-manager/operations/folder/get-id#console_1).
 
 В качестве переменных окружения указывать следующие значения:
 
