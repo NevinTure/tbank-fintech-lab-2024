@@ -1,8 +1,8 @@
 app:
   provider:
-    name: google
-    token: none
-    url: none
+    name: yandex
+    token: test:test
+    url: test
 
 spring:
   application:
