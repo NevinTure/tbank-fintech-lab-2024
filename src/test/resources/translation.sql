@@ -5,4 +5,4 @@ create table if not exists translation(
     target_lang varchar(50) not null,
     origin_text text,
     translated_text text
-)
+);
